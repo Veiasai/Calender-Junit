@@ -1,1 +1,4 @@
 /bin/
+.mvn
+.idea
+.settings
