@@ -15,22 +15,45 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DateSolarLunarTest {
 
-    @ParameterizedTest
-    @CsvSource({"2019-01-05, 2018-11-30"})
-    void date2Lunar(@ConvertWith(DateConverter.class) Date d,
-                    @ConvertWith(LunarConverter.class) Lunar expected) {
+    @Nested
+    class Date2Lunar{
+        @ParameterizedTest
+        @CsvSource({"2019-01-05, 2018-11-30",
+                "2020-02-29, 2020-02-07",
+                "2019-02-30, 2020-02-07"})
+        void normal(@ConvertWith(DateConverter.class) Date input,
+                        @ConvertWith(LunarConverter.class) Lunar expected) {
 
-        Lunar res = DateSolarLunar.date2Lunar(d);
-        assertEquals(expected, res);
+            Lunar res = DateSolarLunar.date2Lunar(input);
+            System.out.println(DateSolarLunar.dump(res));
+            assertEquals(expected, res);
+        }
+
+        @ParameterizedTest
+        @CsvSource({"2019-02-30", "2019-13-20"})
+        void outOfBound(@ConvertWith(DateConverter.class) Date input) {
+            assertThrows(Exception.class, ()-> DateSolarLunar.dump(input));
+        }
     }
 
-    @ParameterizedTest
-    @CsvSource({"2019-01-05, 2019-01-05"})
-    void date2Solar(@ConvertWith(DateConverter.class) Date d,
-                    @ConvertWith(SolarConverter.class) Solar expected) {
-        Solar res = DateSolarLunar.date2Solar(d);
-        assertEquals(expected, res);
+
+    @Nested
+    class Date2Solar{
+        @ParameterizedTest
+        @CsvSource({"2019-01-05, 2019-01-05"})
+        void normal(@ConvertWith(DateConverter.class) Date input,
+                        @ConvertWith(SolarConverter.class) Solar expected) {
+            Solar res = DateSolarLunar.date2Solar(input);
+            assertEquals(expected, res);
+        }
+
+        @ParameterizedTest
+        @CsvSource({"2019-02-30", "2019-13-20"})
+        void outOfBound(@ConvertWith(DateConverter.class) Date input) {
+            assertThrows(Exception.class, ()-> DateSolarLunar.dump(input));
+        }
     }
+
 
     @Nested
     class dump{
