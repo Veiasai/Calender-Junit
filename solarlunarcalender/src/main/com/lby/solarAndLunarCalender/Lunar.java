@@ -18,4 +18,14 @@ public class Lunar {
 		this.lunarMonth = lunarMonth;
 		this.lunarYear = lunarYear;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj.getClass() != Lunar.class)
+			return false;
+		Lunar target = (Lunar) (obj);
+		return target.lunarYear == lunarYear
+				&& target.lunarMonth == lunarMonth
+				&& target.lunarDay == lunarDay;
+	}
 }
