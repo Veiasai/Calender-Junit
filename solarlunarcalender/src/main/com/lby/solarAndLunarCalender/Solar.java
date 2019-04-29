@@ -16,4 +16,14 @@ public class Solar {
 		this.solarMonth = solarMonth;
 		this.solarYear = solarYear;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj.getClass() != Solar.class)
+			return false;
+		Solar target = (Solar)(obj);
+		return target.solarYear == solarYear
+				&& target.solarMonth == solarMonth
+				&& target.solarDay == solarDay;
+	}
 }
