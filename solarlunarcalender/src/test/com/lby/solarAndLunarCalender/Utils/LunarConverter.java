@@ -13,12 +13,33 @@ public class LunarConverter implements ArgumentConverter {
         checkSource(source);
 
         String sourceString = (String) source;
-        String[] paramList = sourceString.split("-");
-        Lunar res = new Lunar();
-        res.lunarYear = Integer.parseInt(paramList[0]);
-        res.lunarMonth = Integer.parseInt(paramList[1]);
-        res.lunarDay = Integer.parseInt(paramList[2]);
-        return res;
+        sourceString = sourceString.replaceAll(" ","");
+        int len = sourceString.length();
+        if (sourceString.charAt(0) == '['
+                && sourceString.charAt(len-1) == ']'){
+            sourceString = sourceString.substring(1, len-1);
+            String[] dates = sourceString.split(",");
+            Lunar[] res = new Lunar[dates.length];
+            int i = 0;
+            for (String date: dates){
+                String[] paramList = date.split("-");
+                Lunar lunar = new Lunar();
+                lunar.lunarYear = Integer.parseInt(paramList[0]);
+                lunar.lunarMonth = Integer.parseInt(paramList[1]);
+                lunar.lunarDay = Integer.parseInt(paramList[2]);
+                res[i] = lunar;
+                ++i;
+            }
+            return res;
+        }
+        else{
+            String[] paramList = sourceString.split("-");
+            Lunar res = new Lunar();
+            res.lunarYear = Integer.parseInt(paramList[0]);
+            res.lunarMonth = Integer.parseInt(paramList[1]);
+            res.lunarDay = Integer.parseInt(paramList[2]);
+            return res;
+        }
     }
 
     private void checkSource(Object source) {

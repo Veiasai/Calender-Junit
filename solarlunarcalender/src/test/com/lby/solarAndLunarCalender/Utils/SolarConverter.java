@@ -13,12 +13,33 @@ public class SolarConverter implements ArgumentConverter {
         checkSource(source);
 
         String sourceString = (String) source;
-        String[] paramList = sourceString.split("-");
-        Solar res = new Solar();
-        res.solarYear = Integer.parseInt(paramList[0]);
-        res.solarMonth = Integer.parseInt(paramList[1]);
-        res.solarDay = Integer.parseInt(paramList[2]);
-        return res;
+        sourceString = sourceString.replaceAll(" ","");
+        int len = sourceString.length();
+        if (sourceString.charAt(0) == '['
+                && sourceString.charAt(len-1) == ']'){
+            sourceString = sourceString.substring(1, len-1);
+            String[] dates = sourceString.split(",");
+            Solar[] res = new Solar[dates.length];
+            int i = 0;
+            for (String date: dates){
+                String[] paramList = date.split("-");
+                Solar solar = new Solar();
+                solar.solarYear = Integer.parseInt(paramList[0]);
+                solar.solarMonth = Integer.parseInt(paramList[1]);
+                solar.solarDay = Integer.parseInt(paramList[2]);
+                res[i] = solar;
+                ++i;
+            }
+            return res;
+        }
+        else{
+            String[] paramList = sourceString.split("-");
+            Solar res = new Solar();
+            res.solarYear = Integer.parseInt(paramList[0]);
+            res.solarMonth = Integer.parseInt(paramList[1]);
+            res.solarDay = Integer.parseInt(paramList[2]);
+            return res;
+        }
     }
 
     private void checkSource(Object source) {
