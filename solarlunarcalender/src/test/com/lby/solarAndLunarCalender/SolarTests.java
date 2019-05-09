@@ -20,9 +20,16 @@ public class SolarTests {
     @ParameterizedTest
     @CsvSource({"2018, 11, 30"})
     void constructor(int y, int m, int d){
-        Solar solar = new Solar(d, m, y);
+        Solar solar = new Solar(y, m, d);
         assertEquals(y, solar.solarYear);
         assertEquals(m, solar.solarMonth);
         assertEquals(d, solar.solarDay);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"2018-05-30, Solar Date: 2018-05-30",
+                "2018-01-03, Solar Date: 2018-01-03"})
+    void toString(@ConvertWith(SolarConverter.class) Solar solar, String str){
+        assertEquals(solar.toString(), str);
     }
 }

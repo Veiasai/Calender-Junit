@@ -25,4 +25,11 @@ public class LunarTests {
         assertEquals(m, lunar.lunarMonth);
         assertEquals(d, lunar.lunarDay);
     }
+
+    @ParameterizedTest
+    @CsvSource({"2018-05-30, Lunar Date: 2018-05-30",
+                "2018-01-03, Lunar Date: 2018-01-03"})
+    void toString(@ConvertWith(LunarConverter.class) Lunar lunar, String str){
+        assertEquals(lunar.toString(), str);
+    }
 }

@@ -19,8 +19,7 @@ class DateSolarLunarTest {
     class Date2Lunar{
         @ParameterizedTest
         @CsvSource({"2019-01-05, 2018-11-30",
-                "2020-02-29, 2020-02-07",
-                "2019-02-30, 2020-02-07"})
+                "2020-02-29, 2020-02-07"})
         void normal(@ConvertWith(DateConverter.class) Date input,
                         @ConvertWith(LunarConverter.class) Lunar expected) {
 

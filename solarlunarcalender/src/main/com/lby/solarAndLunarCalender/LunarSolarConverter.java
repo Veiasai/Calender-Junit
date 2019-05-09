@@ -26,14 +26,24 @@ public class LunarSolarConverter {
 			0x107c53, 0x107e48 };
 
 	private static int GetBitInt(int data, int length, int shift) {
-		return (data & (((1 << length) - 1) << shift)) >> shift;
+		int mask = (((1 << length) - 1) << shift);
+		data = data & mask;
+		int res = data >> shift;
+		return res;
 	}
 
 	// WARNING: Dates before Oct. 1582 are inaccurate
 	private static long SolarToInt(int y, int m, int d) {
 		m = (m + 9) % 12;
 		y = y - m / 10;
-		return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1);
+		int year = 365 * y;
+		//闰年
+		year += y / 4;
+		year -= y / 100;
+		year += y / 400;
+		int month = (m * 306 + 5) / 10;
+		int day = d - 1;
+		return year + month + day;
 	}
 
 	/**
@@ -45,7 +55,13 @@ public class LunarSolarConverter {
 	public static String lunarYearToGanZhi(int lunarYear) {
 		final String[] tianGan = { "甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸" };
 		final String[] diZhi = { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥" };
-		return tianGan[(lunarYear - 4) % 10] + diZhi[(lunarYear - 4) % 12] + "年";
+		StringBuilder sb = new StringBuilder();
+		sb.append(tianGan[(lunarYear - 4) % 10]);
+		sb.append(diZhi[(lunarYear - 4) % 12]);
+		sb.append("年");
+		String res = sb.toString();
+		sb = null;
+		return res;
 	}
 
 	private static Solar SolarFromInt(long g) {
@@ -101,7 +117,10 @@ public class LunarSolarConverter {
 	public static Lunar SolarToLunar(Solar solar) {
 		Lunar lunar = new Lunar();
 		int index = solar.solarYear - solar_1_1[0];
-		int data = (solar.solarYear << 9) | (solar.solarMonth << 5) | (solar.solarDay);
+		int sy = solar.solarYear << 9;
+		int sm = solar.solarMonth << 5;
+		int sd = solar.solarDay;
+		int data =  sy | sm | sd;
 		int solar11 = 0;
 		if (solar_1_1[index] > data) {
 			index--;
