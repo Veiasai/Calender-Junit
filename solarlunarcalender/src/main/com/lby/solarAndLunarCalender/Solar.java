@@ -21,8 +21,6 @@ public class Solar {
 	public boolean equals(Object obj) {
 		if (obj.getClass() != Solar.class)
 			return false;
-		if (obj.hashCode() == hashCode())
-			return true;
 		Solar target = (Solar)(obj);
 		return target.solarYear == solarYear
 				&& target.solarMonth == solarMonth
