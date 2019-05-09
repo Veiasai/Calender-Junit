@@ -19,7 +19,7 @@ public class LunarTests {
     @ParameterizedTest
     @CsvSource({"2018, 11, 30, false"})
     void constructor(int y, int m, int d, boolean isleap){
-        Lunar lunar = new Lunar(isleap, d, m, y);
+        Lunar lunar = new Lunar(isleap, y, m, d);
         assertEquals(isleap, lunar.isleap);
         assertEquals(y, lunar.lunarYear);
         assertEquals(m, lunar.lunarMonth);

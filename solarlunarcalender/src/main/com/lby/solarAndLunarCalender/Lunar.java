@@ -12,7 +12,7 @@ public class Lunar {
 	public Lunar() {
 	}
 
-	public Lunar(boolean isleap, int lunarDay, int lunarMonth, int lunarYear) {
+	public Lunar(boolean isleap, int lunarYear, int lunarMonth, int lunarDay) {
 		this.isleap = isleap;
 		this.lunarDay = lunarDay;
 		this.lunarMonth = lunarMonth;
@@ -23,8 +23,6 @@ public class Lunar {
 	public boolean equals(Object obj) {
 		if (obj.getClass() != Lunar.class)
 			return false;
-		if (obj.hashCode() == hashCode())
-			return true;
 		Lunar target = (Lunar) (obj);
 		return target.lunarYear == lunarYear
 				&& target.lunarMonth == lunarMonth

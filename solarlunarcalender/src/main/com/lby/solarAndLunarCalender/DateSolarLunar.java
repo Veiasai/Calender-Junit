@@ -88,5 +88,47 @@ public class DateSolarLunar {
 		return buffer.toString();
 	}
 
+	/**
+	 * 获取指定年的阴阳历, 放入Map中，key为Lunar，value为Solar
+	 *
+	 * @param year
+	 * @return
+	 */
+	public static Map<Lunar, Solar> getEveryDayLunarSolar(int year) {
+		Map<Lunar, Solar> everyLunarSolar = new HashMap();
+		List<Date> everyDay = getEveryDay(year);
+		for (Date date : everyDay) {
+			everyLunarSolar.put(date2Lunar(date), date2Solar(date));
+		}
+		return everyLunarSolar;
+	}
 
+	/**
+	 * 获取指定年份的每一天-Date
+	 *
+	 * @param year
+	 * @return
+	 */
+	public static List<Date> getEveryDay(int year) {
+		List<Date> everyDay = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date firstDay = null;
+		Date lastDay = null;
+		try {
+			firstDay = sdf.parse(year + "-01-01");
+			lastDay = sdf.parse(year + "-12-31");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		everyDay.add(firstDay);
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(firstDay);
+		Calendar c2 = Calendar.getInstance();
+		c2.setTime(lastDay);
+		while (c2.getTime().after(c1.getTime())) {
+			c1.add(Calendar.DAY_OF_MONTH, 1);
+			everyDay.add(c1.getTime());
+		}
+		return everyDay;
+	}
 }
