@@ -23,9 +23,35 @@ public class Lunar {
 	public boolean equals(Object obj) {
 		if (obj.getClass() != Lunar.class)
 			return false;
+		if (obj.hashCode() == hashCode())
+			return true;
 		Lunar target = (Lunar) (obj);
 		return target.lunarYear == lunarYear
 				&& target.lunarMonth == lunarMonth
 				&& target.lunarDay == lunarDay;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Lunar Date: ");
+		sb.append(lunarYear);
+		sb.append("-");
+		if (0 < lunarMonth){
+			if (lunarMonth < 10){
+				sb.append(0);
+			}
+		}
+		sb.append(lunarMonth);
+		sb.append("-");
+		if (0 < lunarDay){
+			if (lunarDay < 10){
+				sb.append(0);
+			}
+		}
+		sb.append(lunarDay);
+		String s = sb.toString();
+		sb = null;
+		return s;
 	}
 }

@@ -21,9 +21,35 @@ public class Solar {
 	public boolean equals(Object obj) {
 		if (obj.getClass() != Solar.class)
 			return false;
+		if (obj.hashCode() == hashCode())
+			return true;
 		Solar target = (Solar)(obj);
 		return target.solarYear == solarYear
 				&& target.solarMonth == solarMonth
 				&& target.solarDay == solarDay;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Solar Date: ");
+		sb.append(solarYear);
+		sb.append("-");
+		if (0 < solarMonth){
+			if (solarMonth < 10){
+				sb.append(0);
+			}
+		}
+		sb.append(solarMonth);
+		sb.append("-");
+		if (0 < solarDay){
+			if (solarDay < 10){
+				sb.append(0);
+			}
+		}
+		sb.append(solarDay);
+		String s = sb.toString();
+		sb = null;
+		return s;
 	}
 }
